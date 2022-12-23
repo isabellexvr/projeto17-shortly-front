@@ -9,8 +9,10 @@ export default function RankingPage() {
       <RankingContainer>
         <Title>🏆 Ranking</Title>
         <DataStyle></DataStyle>
-        Quer encurtar links também? Crie a sua conta clicando
-        <Warning>aqui</Warning>!
+        <h2>
+          Quer encurtar links também? Torne-se já um shortly você também,
+          clicando <Warning>aqui</Warning>!
+        </h2>
       </RankingContainer>
     </>
   );
@@ -21,6 +23,16 @@ const RankingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  > h2 {
+    margin-top: 30px;
+    font-size: 26px;
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 700;
+    width: 82%;
+    text-decoration: none;
+    color: #1c3aa9;
+    line-height: 30px;
+  }
 `;
 
 const Title = styled.div`
@@ -46,4 +58,6 @@ const Warning = styled(Link)`
   font-family: "Lexend Deca", sans-serif;
   font-weight: 700;
   width: 82%;
+  text-decoration: none;
+  color: #29b6f6;
 `;
