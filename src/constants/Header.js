@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 //if logged, show this
 
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <PageStyle>
       <AuthButtons>
         <button>Entrar</button>
-        <button>Cadastre-se</button>
+        <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
       </AuthButtons>
       <Title>
         <h1>Shortly 🩳</h1>
@@ -18,8 +20,7 @@ export default function Header() {
 }
 
 const PageStyle = styled.div`
-
-    padding-bottom: 16px;
+  padding-bottom: 16px;
 `;
 
 const AuthButtons = styled.div`
