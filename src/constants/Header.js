@@ -12,7 +12,7 @@ export default function Header() {
         <button>Entrar</button>
         <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
       </AuthButtons>
-      <Title>
+      <Title onClick={() => navigate("/")}>
         <h1>Shortly 🩳</h1>
       </Title>
     </PageStyle>
