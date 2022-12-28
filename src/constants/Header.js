@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <PageStyle>
       <AuthButtons>
-        <button>Entrar</button>
+        <button onClick={() => navigate("/sign-in")}>Entrar</button>
         <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
       </AuthButtons>
       <Title onClick={() => navigate("/")}>
