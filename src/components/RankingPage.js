@@ -41,7 +41,7 @@ export default function RankingPage() {
             <Title>🏆 Ranking</Title>
             <DataStyle>
               {ranking.map((c, i) => (
-                <Data>
+                <Data key={i}>
                   {i}. {c.name} - {c.linksCount} links - {c.visitCount}{" "}
                   visualizações
                 </Data>
