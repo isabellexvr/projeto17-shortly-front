@@ -10,8 +10,8 @@ export default function RankingPage() {
         <Title>🏆 Ranking</Title>
         <DataStyle></DataStyle>
         <h2>
-          Quer encurtar links também? Torne-se já um shortly você também,
-          clicando <Warning>aqui</Warning>!
+          Quer encurtar links? Torne-se já um shortly você também,
+          clicando <Warning to="/sign-up">aqui</Warning>!
         </h2>
       </RankingContainer>
     </>
