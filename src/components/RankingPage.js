@@ -1,19 +1,59 @@
 import styled from "styled-components";
 import Header from "../constants/Header";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function RankingPage() {
+  const [ranking, setRanking] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://api-shortly-sql-y2le.onrender.com/ranking")
+      .then((answer) => {
+        console.log(answer.data);
+        setRanking(answer.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
-      <Header></Header>
-      <RankingContainer>
-        <Title>🏆 Ranking</Title>
-        <DataStyle></DataStyle>
-        <h2>
-          Quer encurtar links? Torne-se já um shortly você também,
-          clicando <Warning to="/sign-up">aqui</Warning>!
-        </h2>
-      </RankingContainer>
+      {ranking.length < 1 && (
+        <>
+          <Header></Header>
+          <RankingContainer>
+            <Title>🏆 Ranking</Title>
+            <DataStyle></DataStyle>
+            <h2>
+              Quer encurtar links? Torne-se já um shortly você também, clicando{" "}
+              <Warning to="/sign-up">aqui</Warning>!
+            </h2>
+          </RankingContainer>
+        </>
+      )}
+      {ranking.length > 0 && (
+        <>
+          <Header></Header>
+          <RankingContainer>
+            <Title>🏆 Ranking</Title>
+            <DataStyle>
+              {ranking.map((c, i) => (
+                <Data>
+                  {i}. {c.name} - {c.linksCount} links - {c.visitCount}{" "}
+                  visualizações
+                </Data>
+              ))}
+            </DataStyle>
+            <h2>
+              Quer encurtar links? Torne-se já um shortly você também, clicando{" "}
+              <Warning to="/sign-up">aqui</Warning>!
+            </h2>
+          </RankingContainer>
+        </>
+      )}
     </>
   );
 }
@@ -51,6 +91,11 @@ const DataStyle = styled.div`
   height: 40px;
   margin-top: 40px;
   border-radius: 24px 24px 0px 0px;
+  padding: 13px;
+  box-sizing: border-box;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const Warning = styled(Link)`
@@ -61,3 +106,5 @@ const Warning = styled(Link)`
   text-decoration: none;
   color: #29b6f6;
 `;
+
+const Data = styled.h1``;
