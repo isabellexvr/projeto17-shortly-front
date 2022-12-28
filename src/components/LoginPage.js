@@ -92,7 +92,7 @@ export default function LoginPage() {
 
 const PageStyle = styled.div`
   width: 100%;
-  margin-top: 5vh;
+  margin-top: 8vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,13 +100,12 @@ const PageStyle = styled.div`
 
 const Line = styled.div`
   height: 1px;
-  background-color: #1c3aa9;
+  border-top: 1px dashed #29b6f6;
   width: 76%;
-  opacity: 60%;
 `;
 
 const Title = styled.h1`
-  margin-top: 5vh;
+  margin-top: 8vh;
   margin-bottom: 15px;
   font-family: "Lexend Deca", sans-serif;
   font-size: 25px;
@@ -138,6 +137,12 @@ const SignUpForm = styled.form`
         background-color: #efefef;
         border: none;
     }
+  }
+  >input:focus{
+    box-sizing: border-box;
+    outline: none !important;
+    border: none;
+    box-shadow: 0 0 10px #29b6f6;
   }
   > button {
     height: 9vh;
