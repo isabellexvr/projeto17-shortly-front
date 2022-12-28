@@ -93,9 +93,6 @@ const DataStyle = styled.div`
   border-radius: 24px 24px 0px 0px;
   padding: 13px;
   box-sizing: border-box;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
 `;
 
 const Warning = styled(Link)`
@@ -107,4 +104,8 @@ const Warning = styled(Link)`
   color: #29b6f6;
 `;
 
-const Data = styled.h1``;
+const Data = styled.h1`
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+`;

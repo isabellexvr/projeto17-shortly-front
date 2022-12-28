@@ -3,11 +3,11 @@ import { ResetCss } from "./ResetCss";
 import RankingPage from "./components/RankingPage";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
-import TokenProvider from "./contexts/TokenContext";
+import UserInfoProvider from "./contexts/UserInfo";
 
 function App() {
   return (
-    <TokenProvider>
+    <UserInfoProvider>
       <BrowserRouter>
         <ResetCss />
         <Routes>
@@ -16,7 +16,7 @@ function App() {
           <Route path="/sign-in" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
-    </TokenProvider>
+    </UserInfoProvider>
   );
 }
 

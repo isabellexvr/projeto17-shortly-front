@@ -3,20 +3,20 @@ import Header from "../constants/Header";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useToken } from "../contexts/TokenContext";
+import { useUserInfo } from "../contexts/UserInfo";
 import { BarLoader } from "react-spinners";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { setToken } = useToken();
+  const { setUserInfo } = useUserInfo();
   const [form, setForm] = useState({});
   const [loading, setLoading] = useState(false);
 
   const isLogged = localStorage.getItem("data");
   if (isLogged) {
     const data = JSON.parse(isLogged);
-    setToken(data);
-    alert(`Seja bem-vindo(a) de volta, ${data.name}!`)
+    setUserInfo(data);
+    alert(`Seja bem-vindo(a) de volta, ${data.name}!`);
     navigate("/market");
     return;
   }
@@ -28,20 +28,21 @@ export default function LoginPage() {
   function sendForm(e) {
     e.preventDefault();
     console.log(form);
-    setLoading(true)
+    setLoading(true);
     axios
       .post("https://api-shortly-sql-y2le.onrender.com/signin", form)
       .then((answer) => {
         console.log(answer.data);
+        setUserInfo(answer.data)
         alert(`Seja bem-vindo(a), ${answer.data.name}!`);
-        setLoading(false)
+        setLoading(false);
         const serialized = JSON.stringify(answer.data);
         localStorage.setItem("data", serialized);
         navigate("/sign-in");
       })
       .catch((err) => {
         alert(err.response.data);
-        setLoading(false)
+        setLoading(false);
         console.log(err.response);
       });
   }
@@ -80,8 +81,7 @@ export default function LoginPage() {
             <SignUpForm>
               <input disabled placeholder="E-mail" />
               <input disabled placeholder="Senha" />
-              <button disabled>{<BarLoader color="white"
-              />}</button>
+              <button disabled>{<BarLoader color="white" />}</button>
             </SignUpForm>
           </PageStyle>
         </>
@@ -133,12 +133,12 @@ const SignUpForm = styled.form`
       color: #29b6f6;
       font-size: 15.5px;
     }
-    :disabled{
-        background-color: #efefef;
-        border: none;
+    :disabled {
+      background-color: #efefef;
+      border: none;
     }
   }
-  >input:focus{
+  > input:focus {
     box-sizing: border-box;
     outline: none !important;
     border: none;
@@ -156,8 +156,8 @@ const SignUpForm = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    :disabled{
-        background-color: #93dbf9;
+    :disabled {
+      background-color: #93dbf9;
     }
   }
 `;

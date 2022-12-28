@@ -1,17 +1,48 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-//if logged, show this
+import { useUserInfo } from "../contexts/UserInfo";
+import axios from "axios";
 
 export default function Header() {
+  const { userInfo } = useUserInfo();
   const navigate = useNavigate();
   return (
     <PageStyle>
-      <AuthButtons>
-        <button onClick={() => navigate("/sign-in")}>Entrar</button>
-        <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
-      </AuthButtons>
+      {userInfo.token && (
+        <>
+          <ButtonsContainer>
+            <h1>
+              Seja bem-vindo(a), <strong>{userInfo.name}</strong>!
+            </h1>
+            <div>
+              <HomeButton onClick={() => navigate("/me")}>Home</HomeButton>
+              <RankingButton onClick={() => navigate("/")}>
+                Ranking
+              </RankingButton>
+              <LogoutButton
+                onClick={() => {
+                  axios.delete(
+                    `https://api-shortly-sql-y2le.onrender.com/logout`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${userInfo.token}`,
+                      },
+                    }
+                  );
+                }}
+              >
+                Sair
+              </LogoutButton>
+            </div>
+          </ButtonsContainer>
+        </>
+      )}
+      {!userInfo.token && (
+        <AuthButtonsContainer>
+          <LoginButton onClick={() => navigate("/sign-in")}>Entrar</LoginButton>
+          <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
+        </AuthButtonsContainer>
+      )}
       <Title onClick={() => navigate("/")}>
         <h1>Shortly 🩳</h1>
       </Title>
@@ -21,21 +52,47 @@ export default function Header() {
 
 const PageStyle = styled.div`
   padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const AuthButtons = styled.div`
+const ButtonsContainer = styled.div`
+  font-family: "Lexend Deca", sans-serif;
   margin-top: 3vh;
-  width: 96%;
+  width: 94%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > div {
+    display: flex;
+    justify-content: space-between;
+    > button {
+      border: none;
+      background-color: initial;
+      cursor: pointer;
+    }
+  }
+  > h1 {
+    color: #1c3aa9;
+    font-weight: 600;
+    font-size: 15px;
+    > strong {
+      color: #29b6f6;
+    }
+  }
+`;
+
+const AuthButtonsContainer = styled.div`
+  margin-top: 3vh;
+  width: 94%;
   display: flex;
   justify-content: flex-end;
+  font-family: "Lexend Deca", sans-serif;
   > button {
     border: none;
     background-color: initial;
-    margin-right: 5px;
     cursor: pointer;
-  }
-  > button:first-child {
-    color: #1c3aa9;
   }
 `;
 
@@ -48,4 +105,22 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+`;
+
+const HomeButton = styled.button`
+  color: black;
+`;
+
+const RankingButton = styled.button`
+  color: black;
+  text-shadow: 1px 1px yellow;
+`;
+
+const LogoutButton = styled.button`
+  color: black;
+  text-decoration: underline;
+`;
+
+const LoginButton = styled.button`
+  color: #1c3aa9;
 `;
