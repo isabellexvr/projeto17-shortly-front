@@ -16,8 +16,7 @@ export default function LoginPage() {
   if (isLogged) {
     const data = JSON.parse(isLogged);
     setUserInfo(data);
-    alert(`Seja bem-vindo(a) de volta, ${data.name}!`);
-    navigate("/market");
+    navigate("/me");
     return;
   }
 
@@ -33,8 +32,8 @@ export default function LoginPage() {
       .post("https://api-shortly-sql-y2le.onrender.com/signin", form)
       .then((answer) => {
         console.log(answer.data);
-        setUserInfo(answer.data)
-        alert(`Seja bem-vindo(a), ${answer.data.name}!`);
+        setUserInfo(answer.data);
+        console.log()
         setLoading(false);
         const serialized = JSON.stringify(answer.data);
         localStorage.setItem("data", serialized);

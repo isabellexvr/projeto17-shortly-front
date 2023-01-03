@@ -4,15 +4,18 @@ import { useUserInfo } from "../contexts/UserInfo";
 import axios from "axios";
 
 export default function Header() {
-  const { userInfo } = useUserInfo();
+  const { userInfo, setUserInfo } = useUserInfo();
   const navigate = useNavigate();
+  console.log(userInfo)
+  const isLogged = localStorage.getItem("data");
+  const data = JSON.parse(isLogged);
   return (
     <PageStyle>
-      {userInfo.token && (
+      {isLogged && (
         <>
           <ButtonsContainer>
             <h1>
-              Seja bem-vindo(a), <strong>{userInfo.name}</strong>!
+              Seja bem-vindo(a), <strong>{data.userName}</strong>!
             </h1>
             <div>
               <HomeButton onClick={() => navigate("/me")}>Home</HomeButton>
@@ -21,14 +24,23 @@ export default function Header() {
               </RankingButton>
               <LogoutButton
                 onClick={() => {
-                  axios.delete(
-                    `https://api-shortly-sql-y2le.onrender.com/logout`,
-                    {
-                      headers: {
-                        Authorization: `Bearer ${userInfo.token}`,
-                      },
-                    }
-                  );
+                  axios
+                    .delete(
+                      `https://api-shortly-sql-y2le.onrender.com/logout`,
+                      {
+                        headers: {
+                          Authorization: `Bearer ${data.token}`,
+                        },
+                      }
+                    )
+                    .then((answer) => {
+                      localStorage.removeItem("data");
+                      setUserInfo({});
+                      navigate("/");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 }}
               >
                 Sair
@@ -37,7 +49,7 @@ export default function Header() {
           </ButtonsContainer>
         </>
       )}
-      {!userInfo.token && (
+      {!isLogged && (
         <AuthButtonsContainer>
           <LoginButton onClick={() => navigate("/sign-in")}>Entrar</LoginButton>
           <button onClick={() => navigate("/sign-up")}>Cadastre-se</button>
@@ -60,7 +72,7 @@ const PageStyle = styled.div`
 const ButtonsContainer = styled.div`
   font-family: "Lexend Deca", sans-serif;
   margin-top: 3vh;
-  width: 94%;
+  width: 92%;
   display: flex;
   justify-content: space-between;
   align-items: center;

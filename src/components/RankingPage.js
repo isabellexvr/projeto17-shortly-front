@@ -7,6 +7,8 @@ import { useEffect } from "react";
 
 export default function RankingPage() {
   const [ranking, setRanking] = useState([]);
+  const isLogged = localStorage.getItem("data");
+  const data = JSON.parse(isLogged);
   useEffect(() => {
     axios
       .get("https://api-shortly-sql-y2le.onrender.com/ranking")
@@ -27,10 +29,12 @@ export default function RankingPage() {
           <RankingContainer>
             <Title>🏆 Ranking</Title>
             <DataStyle></DataStyle>
-            <h2>
-              Quer encurtar links? Torne-se já um shortly você também, clicando{" "}
-              <Warning to="/sign-up">aqui</Warning>!
-            </h2>
+            {!isLogged && (
+              <h2>
+                Quer encurtar links? Torne-se já um shortly você também,
+                clicando <Warning to="/sign-up">aqui</Warning>!
+              </h2>
+            )}
           </RankingContainer>
         </>
       )}
@@ -47,10 +51,12 @@ export default function RankingPage() {
                 </Data>
               ))}
             </DataStyle>
-            <h2>
-              Quer encurtar links? Torne-se já um shortly você também, clicando{" "}
-              <Warning to="/sign-up">aqui</Warning>!
-            </h2>
+            {!isLogged && (
+              <h2>
+                Quer encurtar links? Torne-se já um shortly você também,
+                clicando <Warning to="/sign-up">aqui</Warning>!
+              </h2>
+            )}
           </RankingContainer>
         </>
       )}
